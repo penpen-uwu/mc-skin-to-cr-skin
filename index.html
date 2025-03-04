@@ -61,6 +61,10 @@
 				}
 			}			
 
+			usernameInputElement.oninput = () => {
+				usernameInputElement.value = usernameInputElement.value.replace(/[^a-zA-Z0-9_]/g, '');
+			}
+
 			if (canvas.getContext) {
 
 				const context = canvas.getContext("2d");
@@ -390,7 +394,7 @@
 		<h1>Minecraft skin to Cosmic Reach skin converter</h1>
 		<input type="file" id="file-input" accept="image/png" style="font-family: 'Noto Sans';">
 		<p style="margin-top: 0; margin-bottom: 0;">or</p>
-		<input type="text" id="username-input" pattern="/^[a-zA-Z0-9_]{2,16}$/g" placeholder="Enter a Minecraft Java username" size="50%"></input><input type="submit" id="username-submit"></input>
+		<input type="text" id="username-input" pattern="/^[a-zA-Z0-9_]{2,16}$/g" maxlength="16" placeholder="Enter a Minecraft Java username" size="50%"></input><input type="submit" id="username-submit"></input>
 		<br>
 		<label for="skin-type">Original MC skin type:</label>
 		<select name="skin-type" id="skin-type">
