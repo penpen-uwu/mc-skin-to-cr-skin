@@ -29,6 +29,10 @@
 			margin-left: 1em;
 		}
 
+		hidden {
+			display: none;
+		}
+
 	</style>
 	<script>
 		window.addEventListener("load", () => {
@@ -38,6 +42,8 @@
 			const inputPreviewElement = document.getElementById("input-preview");
 			const skinTypeElement = document.getElementById("skin-type");
 			const downloadButtonElement = document.getElementById("download-button");
+			const usernameInputElement = document.getElementById("username-input");
+			const usernameSubmitElement = document.getElementById("username-submit");
 
 			const themeSwitcherElement = document.getElementById("theme-switcher");
 			const theme = document.getElementById("theme");
@@ -300,6 +306,22 @@
 					drawAll();
 				}
 
+				usernameSubmitElement.onclick = (e) => {
+					sizeCheck = new Image();
+					sizeCheck.src = `https://mineskin.eu/skin/${usernameInputElement.value}`;
+
+					sizeCheck.onload = () => {
+						if (!(sizeCheck.width == 64 && sizeCheck.height == 64)) {
+							confirm("Invalid skin: either uses 1.7 skin format or username doesn't exist");
+						} else {
+							inputPreviewElement.src = `https://mineskin.eu/skin/${usernameInputElement.value}`;
+							inputPreviewElement.onload = () => { 
+								drawAll();
+							}
+						}
+					}
+				}
+
 				fr.addEventListener("load", () => {
 					sizeCheck = new Image();
 					sizeCheck.src = fr.result
@@ -334,6 +356,10 @@
 		<button id="theme-switcher">Toggle Theme</button>
 		<h1>Minecraft skin to Cosmic Reach skin converter</h1>
 		<input type="file" id="file-input" accept="image/png" style="font-family: 'Noto Sans';">
+		<hidden>
+			<p style="margin-top: 0; margin-bottom: 0;">or</p>
+			<input type="text" id="username-input" placeholder="Enter a Minecraft Java username" size="50%"></input><input type="submit" id="username-submit"></input>
+		</hidden>
 		<br>
 		<label for="skin-type">Original MC skin type:</label>
 		<select name="skin-type" id="skin-type">
