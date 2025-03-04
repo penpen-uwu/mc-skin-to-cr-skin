@@ -7,16 +7,8 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-	<style>
-		body {
-			background: #222222;
-			color: #DDDDDD;
-			font-family: "Noto Sans", sans-serif;
-			display: flex;
-			justify-content: center;
-
-		}
-
+	<link rel="stylesheet" id="theme" href="light.css">
+	<style type="text/css">
 		#input-preview, #canvas {
 			image-rendering: pixelated;
 			height: 50%;
@@ -27,6 +19,12 @@
 			margin: 1em;
 		}
 
+		#theme-switcher {
+			position: fixed;
+			top: 1em;
+			right: 1em;
+		}
+
 		#todo {
 			float: inline-end;
 		}
@@ -34,14 +32,26 @@
 	<script>
 		window.addEventListener("load", () => {
 			const fr = new FileReader();
+			const canvas = document.getElementById("canvas");
 			const fileInputElement = document.getElementById("file-input");
 			const inputPreviewElement = document.getElementById("input-preview");
 			const skinTypeElement = document.getElementById("skin-type");
+			const themeSwitcherElement = document.getElementById("theme-switcher");
+			const theme = document.getElementById("theme");
 
 			defaultOutputImage = new Image();
 			defaultOutputImage.src = "cr-skin.png";
 
-			const canvas = document.getElementById("canvas");
+			themeSwitcherElement.onclick = () => {
+				console.log(theme.href);
+				if (theme.href == "light.css") {
+					theme.href = "dark.css"
+				} else if (theme.href == "dark.css") {	
+					theme.href = "light.css"
+				} else {
+					theme.href = "dark.css"
+				}
+			}			
 
 			if (canvas.getContext) {
 
@@ -283,6 +293,7 @@
 
 <body>
 	<div>
+		<button id="theme-switcher">Toggle Theme</button>
 		<h1>Minecraft skin to Cosmic Reach skin converter</h1>
 		<input type="file" id="file-input" accept="image/png" style="font-family: 'Noto Sans';">
 		<br>
