@@ -25,6 +25,11 @@
 			right: 1em;
 		}
 
+		#download-button {
+			display: none;
+			margin-left: 1em;
+		}
+
 	</style>
 	<script>
 		window.addEventListener("load", () => {
@@ -33,6 +38,8 @@
 			const fileInputElement = document.getElementById("file-input");
 			const inputPreviewElement = document.getElementById("input-preview");
 			const skinTypeElement = document.getElementById("skin-type");
+			const downloadButtonElement = document.getElementById("download-button");
+
 			const themeSwitcherElement = document.getElementById("theme-switcher");
 			const theme = document.getElementById("theme");
 			currentTheme = "dark";
@@ -56,6 +63,13 @@
 				context.imageSmoothingEnabled = false;
 				context.mozImageSmoothingEnabled = false; 
 				context.webkitImageSmoothingEnabled = false;
+
+				downloadButtonElement.onclick = () => {
+					var link = document.createElement('a');
+					link.download = 'skin.png';
+					link.href = canvas.toDataURL()
+					link.click();
+				}
 
 				defaultOutputImage.onload = () => { 
 					drawAll();
@@ -327,7 +341,7 @@
 			<img id="input-preview" src="mc-skin.png"></img>
 		</div>
 		<div id="output-div">
-			<p style="text-align: center;">Cosmic Reach skin (Right Click > Save Image As..)</p>
+			<p style="text-align: center;">Cosmic Reach skin (Right Click > Save Image As..)<button id="download-button">Download</button></p>
 			<canvas id="canvas" width="128" height="64"></canvas>
 		</div>
 	</div>
