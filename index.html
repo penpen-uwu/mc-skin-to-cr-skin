@@ -24,7 +24,7 @@
 			top: 1em;
 			right: 1em;
 		}
-		
+
 	</style>
 	<script>
 		window.addEventListener("load", () => {
@@ -58,7 +58,7 @@
 				context.webkitImageSmoothingEnabled = false;
 
 				defaultOutputImage.onload = () => { 
-					context.drawImage(defaultOutputImage, 0, 0);
+					drawAll();
 				}
 
 				s = skinTypeElement.value; // number of pixels to subtract (so 4px arm - 0|1px)
@@ -78,6 +78,8 @@
 					drawPart(32, 0, 32, 16, 80, 1, 32, 16);
 
 					// chest
+					// bottom base
+					drawPart(20, 26, 8, 1, 32, 18, 9, 5);
 					// top base
 					drawPart(20, 16, 8, 4, 23, 18, 9, 5);
 					// top overlay
@@ -100,6 +102,8 @@
 					drawPart(28, 36, 4, 7, 96, 23, 5, 6);
 
 					// hip
+					// top base
+					drawPart(20, 27, 8, 1, 24, 30, 8, 4);
 					// bottom base
 					drawPart(28, 16, 8, 4, 32, 30, 8, 4);
 					// bottom overlay
@@ -110,6 +114,8 @@
 					drawPart(16, 43, 24, 5, 84, 34, 24, 4);
 
 					// right leg
+					// bottom base
+					drawPart(4, 24, 4, 1, 23, 39, 4, 4);
 					// top base
 					drawPart(4, 16, 4, 4, 19, 39, 4, 4);
 					// top overlay
@@ -120,6 +126,8 @@
 					drawPart(0, 36, 16, 5, 79, 43, 16, 6);
 
 					// left leg
+					// bottom base
+					drawPart(20, 56, 4, 1, 41, 39, 4, 4);
 					// top base
 					drawPart(20, 48, 4, 4, 37, 39, 4, 4);
 					// top overlay
@@ -130,6 +138,8 @@
 					drawPart(0, 52, 16, 5, 97, 43, 16, 6);
 
 					// right lower leg
+					// top base
+					drawPart(4, 25, 4, 1, 18, 50, 4, 5);
 					// bottom base
 					drawPart(8, 16, 4, 4, 22, 50, 4, 5);
 					// bottom overlay 
@@ -152,6 +162,8 @@
 					drawPart(8, 41, 4, 7, 86, 55, 5, 8);
 
 					// left lower leg
+					// top base
+					drawPart(20, 57, 4, 1, 38, 50, 4, 5);
 					// bottom base
 					drawPart(24, 48, 4, 4, 42, 50, 4, 5);
 					// bottom overlay 
@@ -174,6 +186,8 @@
 					drawPart(8, 57, 4, 7, 106, 55, 5, 8);
 
 					// right arm
+					// bottom base
+					drawPart(44, 25, 4-s, 1, 10, 18, 3, 4);
 					// top base
 					drawPart(44, 16, 4-s, 4, 7, 18, 3, 4);
 					// top overlay
@@ -196,6 +210,8 @@
 					drawPart(48-s, 36, 4, 6, 74, 22, 4, 6);
 
 					// left arm
+					// bottom base
+					drawPart(36, 57, 4-s, 1, 54, 18, 3, 4);
 					// top base
 					drawPart(36, 48, 4-s, 4, 7+44, 18, 3, 4);
 					// top overlay
@@ -218,6 +234,8 @@
 					drawPart(56-s, 52, 4, 6, 118, 22, 4, 6);
 
 					// right lower arm
+					// top base
+					drawPart(44, 28, 4-s, 1, 6, 29, 4, 4);
 					// bottom base
 					drawPart(48-s, 16, 4-s, 4, 10, 29, 4, 4);
 					// bottom overlay
@@ -240,6 +258,8 @@
 					drawPart(48-s, 42, 4, 6, 74, 33, 4, 7);
 
 					// left lower arm
+					// top base
+					drawPart(36, 60, 4-s, 1, 50, 29, 4, 4);
 					// bottom base
 					drawPart(40-s, 48, 4-s, 4, 54, 29, 4, 4);
 					// bottom overlay
@@ -260,6 +280,8 @@
 					drawPart(40-s, 58, 4, 6, 54, 33, 4, 7);
 					// left overlay
 					drawPart(56-s, 58, 4, 6, 118, 33, 4, 7);
+
+					console.log(context.getImageData(27, 28, 1, 1));
 				}
 
 				skinTypeElement.onchange = () => {
