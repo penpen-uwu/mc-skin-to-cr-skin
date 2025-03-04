@@ -3,7 +3,6 @@
 	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-	<link rel="manifest" href="site.webmanifest">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -77,7 +76,7 @@
 				}
 
 				defaultOutputImage.onload = () => { 
-					drawAll();
+					drawAll(skinTypeElement.value);
 				}
 
 				s = skinTypeElement.value; // number of pixels to subtract (so 4px arm - 0|1px)
@@ -86,7 +85,7 @@
 					context.drawImage(inputPreviewElement, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
 				}
 
-				function drawAll() {
+				function drawAll(s) {
 					context.clearRect(0, 0, 128, 64);
 					// drawPart(sx, sy, sWidth, sHeight, dx(+64 for overlay), dy, dWidth, dHeight)
 
@@ -303,23 +302,64 @@
 
 				skinTypeElement.onchange = () => {
 					s = skinTypeElement.value;
-					drawAll();
+					drawAll(skinTypeElement.value);
 				}
 
 				usernameSubmitElement.onclick = (e) => {
-					sizeCheck = new Image();
-					sizeCheck.src = `https://mineskin.eu/skin/${usernameInputElement.value}`;
+					usernameInputElement.disabled = true;
+					usernameSubmitElement.disabled = true;
 
-					sizeCheck.onload = () => {
-						if (!(sizeCheck.width == 64 && sizeCheck.height == 64)) {
-							confirm("Invalid skin: either uses 1.7 skin format or username doesn't exist");
-						} else {
-							inputPreviewElement.src = `https://mineskin.eu/skin/${usernameInputElement.value}`;
-							inputPreviewElement.onload = () => { 
-								drawAll();
+					fetch(`https://api.minetools.eu/uuid/${usernameInputElement.value}`)
+					.then((r) => {
+						usernameInputElement.value = "Loading...";
+						r.json().then((j) => {
+							if (j.id == null) {
+								confirm("Player does not exist. Try a different username.");
+								usernameInputElement.disabled = false;
+								usernameSubmitElement.disabled = false;
+								usernameInputElement.placeholder = "Enter a Minecraft Java username";
+								usernameInputElement.value = "";
+								return;
 							}
-						}
-					}
+							fetch(`https://api.minetools.eu/profile/${j.id}`)
+							.then((r) => {
+								r.json().then((j) => {
+									skin = j.decoded.textures.SKIN
+
+									sizeCheck = new Image();
+									sizeCheck.src = skin.url;
+									if (Object.hasOwn(skin, 'metadata')) {
+										if (skin.metadata.model == "slim") {
+											s = 1;
+											skinTypeElement.selectedIndex = 1;
+										} else {
+											s = 0;
+											skinTypeElement.selectedIndex = 0;
+										}
+									}
+
+									sizeCheck.onload = () => {
+										if (!(sizeCheck.width == 64 && sizeCheck.height == 64)) {
+											confirm("This player uses the 1.7 skin format, which is unsupported. Try a different player.");
+											usernameInputElement.disabled = false;
+											usernameSubmitElement.disabled = false;
+											usernameInputElement.placeholder = "Enter a Minecraft Java username";
+											usernameInputElement.value = "";
+										} else {
+											inputPreviewElement.src = sizeCheck.src;
+											inputPreviewElement.onload = () => { 	
+												drawAll(s);
+												usernameInputElement.disabled = false;
+												usernameSubmitElement.disabled = false;
+												usernameInputElement.placeholder = "Enter a Minecraft Java username";
+												usernameInputElement.value = "";
+											}
+										}
+									}
+								})
+							})
+						})
+					})
 				}
 
 				fr.addEventListener("load", () => {
@@ -332,7 +372,7 @@
 						} else {
 							inputPreviewElement.src = fr.result;
 							inputPreviewElement.onload = () => { 
-								drawAll();
+								drawAll(skinTypeElement.value);
 							}
 						}
 					}
