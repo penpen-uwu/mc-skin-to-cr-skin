@@ -24,10 +24,6 @@
 			right: 1em;
 		}
 
-		#download-button {
-			margin-left: 1em;
-		}
-
 		hidden {
 			display: none;
 		}
@@ -40,7 +36,6 @@
 			const fileInputElement = document.getElementById("file-input");
 			const inputPreviewElement = document.getElementById("input-preview");
 			const skinTypeElement = document.getElementById("skin-type");
-			const downloadButtonElement = document.getElementById("download-button");
 			const usernameInputElement = document.getElementById("username-input");
 			const usernameSubmitElement = document.getElementById("username-submit");
 
@@ -67,13 +62,6 @@
 				context.imageSmoothingEnabled = false;
 				context.mozImageSmoothingEnabled = false; 
 				context.webkitImageSmoothingEnabled = false;
-
-				downloadButtonElement.onclick = () => {
-					var link = document.createElement('a');
-					link.download = 'skin.png';
-					link.href = canvas.toDataURL()
-					link.click();
-				}
 
 				defaultOutputImage.onload = () => { 
 					drawAll(skinTypeElement.value);
@@ -396,10 +384,8 @@
 		<button id="theme-switcher">Toggle Theme</button>
 		<h1>Minecraft skin to Cosmic Reach skin converter</h1>
 		<input type="file" id="file-input" accept="image/png" style="font-family: 'Noto Sans';">
-		<hidden>
-			<p style="margin-top: 0; margin-bottom: 0;">or</p>
-			<input type="text" id="username-input" placeholder="Enter a Minecraft Java username" size="50%"></input><input type="submit" id="username-submit"></input>
-		</hidden>
+		<p style="margin-top: 0; margin-bottom: 0;">or</p>
+		<input type="text" id="username-input" pattern="/^[a-zA-Z0-9_]{2,16}$/g" placeholder="Enter a Minecraft Java username" size="50%"></input><input type="submit" id="username-submit"></input>
 		<br>
 		<label for="skin-type">Original MC skin type:</label>
 		<select name="skin-type" id="skin-type">
@@ -412,7 +398,7 @@
 			<img id="input-preview" src="mc-skin.png"></img>
 		</div>
 		<div id="output-div">
-			<p style="text-align: center;">Cosmic Reach skin<button id="download-button">Download</button></p>
+			<p style="text-align: center;">Cosmic Reach skin (Right click > Save Image As...)</p>
 			<canvas id="canvas" width="128" height="64"></canvas>
 		</div>
 	</div>
