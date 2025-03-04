@@ -1,0 +1,317 @@
+<head>
+	<title>MC2CR Skin converter</title>
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+	<link rel="manifest" href="site.webmanifest">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+	<style>
+		body {
+			background: #222222;
+			color: #DDDDDD;
+			font-family: "Noto Sans", sans-serif;
+			display: flex;
+			justify-content: center;
+
+		}
+
+		#input-preview, #canvas {
+			image-rendering: pixelated;
+			height: 50%;
+		}
+
+		#input-div, #output-div {
+			float: left;
+			margin: 1em;
+		}
+
+		#todo {
+			float: inline-end;
+		}
+	</style>
+	<script>
+		window.addEventListener("load", () => {
+			const fr = new FileReader();
+			const fileInputElement = document.getElementById("file-input");
+			const inputPreviewElement = document.getElementById("input-preview");
+			const skinTypeElement = document.getElementById("skin-type");
+
+			defaultOutputImage = new Image();
+			defaultOutputImage.src = "cr-skin.png";
+
+			const canvas = document.getElementById("canvas");
+
+			if (canvas.getContext) {
+
+				const context = canvas.getContext("2d");
+				context.imageSmoothingEnabled = false;
+				context.mozImageSmoothingEnabled = false; 
+				context.webkitImageSmoothingEnabled = false;
+
+				defaultOutputImage.onload = () => { 
+					context.drawImage(defaultOutputImage, 0, 0);
+				}
+
+				s = skinTypeElement.value; // number of pixels to subtract (so 4px arm - 0|1px)
+
+				function drawPart(sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) {
+					context.drawImage(inputPreviewElement, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+				}
+
+				function drawAll() {
+					context.clearRect(0, 0, 128, 64);
+					// drawPart(sx, sy, sWidth, sHeight, dx(+64 for overlay), dy, dWidth, dHeight)
+
+					// head
+					// base
+					drawPart(0, 0, 32, 16, 16, 1, 32, 16);
+					// overlay
+					drawPart(32, 0, 32, 16, 80, 1, 32, 16);
+
+					// chest
+					// top base
+					drawPart(20, 16, 8, 4, 23, 18, 9, 5);
+					// top overlay
+					drawPart(20, 32, 8, 4, 87, 18, 9, 5);
+					// front base
+					drawPart(20, 20, 8, 7, 23, 23, 9, 6);
+					// front overlay
+					drawPart(20, 36, 8, 7, 87, 23, 9, 6);
+					// back base
+					drawPart(32, 20, 8, 7, 37, 23, 9, 6);
+					// back overlay
+					drawPart(32, 36, 8, 7, 101, 23, 9, 6);
+					// right base
+					drawPart(16, 20, 4, 7, 18, 23, 5, 6);
+					// right overlay
+					drawPart(16, 36, 4, 7, 82, 23, 5, 6);
+					// left base
+					drawPart(28, 20, 4, 7, 32, 23, 5, 6);
+					// left overlay
+					drawPart(28, 36, 4, 7, 96, 23, 5, 6);
+
+					// hip
+					// bottom base
+					drawPart(28, 16, 8, 4, 32, 30, 8, 4);
+					// bottom overlay
+					drawPart(28, 32, 8, 4, 96, 30, 8, 4);
+					// sides base
+					drawPart(16, 27, 24, 5, 20, 34, 24, 4);
+					// sides overlay
+					drawPart(16, 43, 24, 5, 84, 34, 24, 4);
+
+					// right leg
+					// top base
+					drawPart(4, 16, 4, 4, 19, 39, 4, 4);
+					// top overlay
+					drawPart(4, 32, 4, 4, 83, 39, 4, 4);
+					// sides base
+					drawPart(0, 20, 16, 5, 15, 43, 16, 6);
+					// sides overlay
+					drawPart(0, 36, 16, 5, 79, 43, 16, 6);
+
+					// left leg
+					// top base
+					drawPart(20, 48, 4, 4, 37, 39, 4, 4);
+					// top overlay
+					drawPart(4, 48, 4, 4, 101, 39, 4, 4);
+					// sides base
+					drawPart(16, 52, 16, 5, 33, 43, 16, 6);
+					// sides overlay
+					drawPart(0, 52, 16, 5, 97, 43, 16, 6);
+
+					// right lower leg
+					// bottom base
+					drawPart(8, 16, 4, 4, 22, 50, 4, 5);
+					// bottom overlay 
+					drawPart(8, 32, 4, 4, 86, 50, 4, 5);
+					// front base
+					drawPart(4, 25, 4, 7, 18, 55, 4, 8);
+					// front overlay
+					drawPart(4, 41, 4, 7, 82, 55, 4, 8);
+					// back base
+					drawPart(12, 25, 4, 7, 27, 55, 4, 8);
+					// back overlay
+					drawPart(12, 41, 4, 7, 91, 55, 4, 8);
+					// right base 
+					drawPart(0, 25, 4, 7, 13, 55, 5, 8);
+					// right overlay 
+					drawPart(0, 41, 4, 7, 77, 55, 5, 8);
+					// left base 
+					drawPart(8, 25, 4, 7, 22, 55, 5, 8);
+					// left overlay 
+					drawPart(8, 41, 4, 7, 86, 55, 5, 8);
+
+					// left lower leg
+					// bottom base
+					drawPart(24, 48, 4, 4, 42, 50, 4, 5);
+					// bottom overlay 
+					drawPart(8, 48, 4, 4, 106, 50, 4, 5);
+					// front base
+					drawPart(20, 57, 4, 7, 38, 55, 4, 8);
+					// front overlay
+					drawPart(4, 57, 4, 7, 102, 55, 4, 8);
+					// back base
+					drawPart(28, 57, 4, 7, 47, 55, 4, 8);
+					// back overlay
+					drawPart(12, 57, 4, 7, 111, 55, 4, 8);
+					// right base 
+					drawPart(16, 57, 4, 7, 33, 55, 5, 8);
+					// right overlay 
+					drawPart(0, 57, 4, 7, 97, 55, 5, 8);
+					// left base 
+					drawPart(24, 57, 4, 7, 42, 55, 5, 8);
+					// left overlay 
+					drawPart(8, 57, 4, 7, 106, 55, 5, 8);
+
+					// right arm
+					// top base
+					drawPart(44, 16, 4-s, 4, 7, 18, 3, 4);
+					// top overlay
+					drawPart(44, 32, 4-s, 4, 71, 18, 3, 4);
+					// front base
+					drawPart(44, 20, 4-s, 6, 7, 22, 3, 6);
+					// front overlay
+					drawPart(44, 36, 4-s, 6, 71, 22, 3, 6);
+					// back base
+					drawPart(52-s, 20, 4-s, 6, 14, 22, 3, 6);
+					// back overlay
+					drawPart(52-s, 36, 4-s, 6, 78, 22, 3, 6);
+					// right base
+					drawPart(40, 20, 4, 6, 3, 22, 4, 6);
+					// right overlay
+					drawPart(40, 36, 4, 6, 67, 22, 4, 6);
+					// left base
+					drawPart(48-s, 20, 4, 6, 10, 22, 4, 6);
+					// left overlay
+					drawPart(48-s, 36, 4, 6, 74, 22, 4, 6);
+
+					// left arm
+					// top base
+					drawPart(36, 48, 4-s, 4, 7+44, 18, 3, 4);
+					// top overlay
+					drawPart(52, 48, 4-s, 4, 115, 18, 3, 4);
+					// front base
+					drawPart(36, 52, 4-s, 6, 51, 22, 3, 6);
+					// front overlay
+					drawPart(52, 52, 4-s, 6, 115, 22, 3, 6);
+					// back base
+					drawPart(44-s, 52, 4-s, 6, 58, 22, 3, 6);
+					// back overlay
+					drawPart(60-s, 52, 4-s, 6, 122, 22, 3, 6);
+					// right base
+					drawPart(32, 52, 4, 6, 47, 22, 4, 6);
+					// right overlay
+					drawPart(48, 52, 4, 6, 111, 22, 4, 6);
+					// left base
+					drawPart(40-s, 52, 4, 6, 54, 22, 4, 6);
+					// left overlay
+					drawPart(56-s, 52, 4, 6, 118, 22, 4, 6);
+
+					// right lower arm
+					// bottom base
+					drawPart(48-s, 16, 4-s, 4, 10, 29, 4, 4);
+					// bottom overlay
+					drawPart(48-s, 32, 4-s, 4, 74, 29, 4, 4);
+					// front base
+					drawPart(44, 26, 4-s, 6, 6, 33, 4, 7);
+					// front overlay
+					drawPart(44, 42, 4-s, 6, 70, 33, 4, 7);
+					// back base
+					drawPart(52-s, 26, 4-s, 6, 14, 33, 4, 7);
+					// back overlay
+					drawPart(52-s, 42, 4-s, 6, 78, 33, 4, 7);
+					// right base
+					drawPart(40, 26, 4, 6, 2, 33, 4, 7);
+					// right overlay
+					drawPart(40, 42, 4, 6, 66, 33, 4, 7);
+					// left base 
+					drawPart(48-s, 26, 4, 6, 10, 33, 4, 7);
+					// left overlay 
+					drawPart(48-s, 42, 4, 6, 74, 33, 4, 7);
+
+					// left lower arm
+					// bottom base
+					drawPart(40-s, 48, 4-s, 4, 54, 29, 4, 4);
+					// bottom overlay
+					drawPart(56-s, 48, 4-s, 4, 118, 29, 4, 4);
+					// front base
+					drawPart(36, 58, 4-s, 6, 50, 33, 4, 7);
+					// front overlay
+					drawPart(52, 58, 4-s, 6, 114, 33, 4, 7);
+					// back base
+					drawPart(44-s, 58, 4-s, 6, 58, 33, 4, 7);
+					// back overlay
+					drawPart(60-s, 58, 4-s, 6, 122, 33, 4, 7);
+					// right base
+					drawPart(32, 58, 4, 6, 46, 33, 4, 7);
+					// right overlay
+					drawPart(48, 58, 4, 6, 110, 33, 4, 7);
+					// left base
+					drawPart(40-s, 58, 4, 6, 54, 33, 4, 7);
+					// left overlay
+					drawPart(56-s, 58, 4, 6, 118, 33, 4, 7);
+				}
+
+				skinTypeElement.onchange = () => {
+					s = skinTypeElement.value;
+					drawAll();
+				}
+
+				fr.addEventListener("load", () => {
+					inputPreviewElement.src = fr.result;
+
+					inputPreviewElement.onload = () => { 
+						drawAll();
+					}
+				})
+			}
+
+			fileInputElement.addEventListener("change", () => {
+				if (!fileInputElement.files) return;
+				if (fileInputElement.files[0]["type"] != "image/png") {
+					confirm("Please choose a PNG file.");
+					return;
+				}
+				fr.readAsDataURL(fileInputElement.files[0]);
+			})
+		});
+	</script>
+</head>
+
+<body>
+	<div>
+		<h1>Minecraft skin to Cosmic Reach skin converter</h1>
+		<input type="file" id="file-input" accept="image/png" style="font-family: 'Noto Sans';">
+		<br>
+		<label for="skin-type">Original MC skin type:</label>
+		<select name="skin-type" id="skin-type">
+			<option value="0">Wide (4px arm)</option>
+			<option value="1">Slim (3px arm)</option>
+		</select>
+		<br>
+		<div id="input-div">
+			<p style="text-align: center;">Minecraft skin</p>
+			<img id="input-preview" src="mc-skin.png"></img>
+		</div>
+		<div id="output-div">
+			<p style="text-align: center;">Cosmic Reach skin (Right Click > Save Image As..)</p>
+			<canvas id="canvas" width="128" height="64"></canvas>
+		</div>
+		<br>
+		<div id="todo">
+			<p>stuff i'll add later:</p>
+			<ol>
+				<li>light and dark theme</li>
+				<li>fix css</li>
+				<li>download button</li>
+				<li>arrow pointing from the mc to cr skin</li>
+				<li>making cr skin from mc java usernames</li>
+				<li>3d renders of skins maybe</li>
+				<li>make the empty parts (like inbetween chest and hip) filled with the mode of the color of all the lowest/highest pixels on the model</li>
+			</ol>
+		</div>
+	</div>
+</body>
