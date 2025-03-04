@@ -301,10 +301,18 @@
 				}
 
 				fr.addEventListener("load", () => {
-					inputPreviewElement.src = fr.result;
+					sizeCheck = new Image();
+					sizeCheck.src = fr.result
 
-					inputPreviewElement.onload = () => { 
-						drawAll();
+					sizeCheck.onload = () => {
+						if (!(sizeCheck.width == 64 && sizeCheck.height == 64)) {
+							confirm("Please choose a 64x64 image.");
+						} else {
+							inputPreviewElement.src = fr.result;
+							inputPreviewElement.onload = () => { 
+								drawAll();
+							}
+						}
 					}
 				})
 			}
