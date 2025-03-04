@@ -7,7 +7,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-	<link rel="stylesheet" id="theme" href="light.css">
+	<link rel="stylesheet" id="theme" href="dark.css">
 	<style type="text/css">
 		#input-preview, #canvas {
 			image-rendering: pixelated;
@@ -38,18 +38,18 @@
 			const skinTypeElement = document.getElementById("skin-type");
 			const themeSwitcherElement = document.getElementById("theme-switcher");
 			const theme = document.getElementById("theme");
+			currentTheme = "dark";
 
 			defaultOutputImage = new Image();
 			defaultOutputImage.src = "cr-skin.png";
 
 			themeSwitcherElement.onclick = () => {
-				console.log(theme.href);
-				if (theme.href == "light.css") {
-					theme.href = "dark.css"
-				} else if (theme.href == "dark.css") {	
-					theme.href = "light.css"
+				if (currentTheme == "dark") {
+					currentTheme = "light";
+					theme.href = "light.css";
 				} else {
-					theme.href = "dark.css"
+					currentTheme = "dark";
+					theme.href = "dark.css";
 				}
 			}			
 
