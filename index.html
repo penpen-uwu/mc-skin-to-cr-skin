@@ -63,6 +63,10 @@
 			font-size: 2.5vw;
 		}
 
+		#mobile {
+			display: none;
+		}
+
 		@media (max-width: 1000px) { 
 			#input-div, #output-div {
 				float: none; 
@@ -77,6 +81,11 @@
 	</style>
 	<script>
 		window.addEventListener("load", () => {
+
+			if (navigator.userAgentData.mobile) {
+				document.getElementById("mobile").style.display = "unset";
+			}
+
 			const fr = new FileReader();
 			const canvas = document.getElementById("canvas");
 			const fileInputElement = document.getElementById("file-input");
@@ -432,6 +441,7 @@
 </head>
 
 <body>
+	<h1 id="mobile">Mobile devices are not supported, use a computer! (you cant play cosmic reach on mobile why would you need the skin on mobile)</h1>
 	<button id="theme-switcher">Switch to light mode</button>
 	<div>
 		<h1 id="header">Minecraft skin to Cosmic Reach skin converter</h1>
