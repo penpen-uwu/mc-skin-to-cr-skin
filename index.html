@@ -1,11 +1,14 @@
 <head>
 	<title>MC2CR Skin converter</title>
+
 	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
 	<link rel="stylesheet" id="theme" href="dark.css">
 	<style type="text/css">
 		#input-preview, #canvas {
@@ -29,8 +32,7 @@
 		}
 
 		#bottom-text {
-			position: absolute;
-			bottom: 2%;
+			bottom: 0px;
 		}
 
 	</style>
@@ -55,14 +57,16 @@
 				if (currentTheme == "dark") {
 					currentTheme = "light";
 					theme.href = "light.css";
+					themeSwitcherElement.innerHTML = "Switch to dark mode";
 				} else {
 					currentTheme = "dark";
 					theme.href = "dark.css";
+					themeSwitcherElement.innerHTML = "Switch to light mode";
 				}
 			}			
 
 			usernameInputElement.oninput = () => {
-				usernameInputElement.value = usernameInputElement.value.replace(/[^a-zA-Z0-9_]/g, '');
+				usernameInputElement.value = usernameInputElement.value.replace(/[^a-zA-Z0-9_]/g, "");
 			}
 
 			if (canvas.getContext) {
@@ -389,9 +393,9 @@
 </head>
 
 <body>
+	<button id="theme-switcher">Switch to light mode</button>
 	<div>
-		<button id="theme-switcher">Toggle Theme</button>
-		<h1>Minecraft skin to Cosmic Reach skin converter</h1>
+		<h1 id="header">Minecraft skin to Cosmic Reach skin converter</h1>
 		<input type="file" id="file-input" accept="image/png" style="font-family: 'Noto Sans';">
 		<p style="margin-top: 0; margin-bottom: 0;">or</p>
 		<input type="text" id="username-input" pattern="/^[a-zA-Z0-9_]{2,16}$/g" maxlength="16" placeholder="Enter a Minecraft Java username" size="50%"></input><input type="submit" id="username-submit"></input>
@@ -410,8 +414,8 @@
 			<p style="text-align: center;">Cosmic Reach skin (Right click > Save Image As...)</p>
 			<canvas id="canvas" width="128" height="64"></canvas>
 		</div>
-	</div>
-	<br>
-	<br>
-	<p id="bottom-text">https://api.minetools.eu/ is used for getting skins from usernames<p>
+		<p id="bottom-text">https://api.minetools.eu/ is used for getting skins from usernames<p>
+		</div>
+		<br>
+		<br>
 	</body>
