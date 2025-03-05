@@ -63,6 +63,17 @@
 			font-size: 2.5vw;
 		}
 
+		@media (max-width: 1000px) { 
+			#input-div, #output-div {
+				float: none; 
+				width: 100%; 
+				margin: 1em 0; 
+			}
+			#input-preview, #canvas {
+				height: 50vw; 
+			}
+		}
+
 	</style>
 	<script>
 		window.addEventListener("load", () => {
