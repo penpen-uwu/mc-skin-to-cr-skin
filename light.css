@@ -1,8 +1,4 @@
 body {
-	background: #EEEEEE;
-	color: #111111;
-	font-family: "Noto Sans", sans-serif;
-	display: flex;
-	justify-content: center;
-
+	--background-color: #EEEEEE;
+	--text-color: #111111;
 }

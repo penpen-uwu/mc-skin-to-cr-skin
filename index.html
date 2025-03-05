@@ -11,6 +11,14 @@
 
 	<link rel="stylesheet" id="theme" href="dark.css">
 	<style type="text/css">
+		body {
+			background: var(--background-color);
+			color: var(--text-color);
+			font-family: "Noto Sans", sans-serif;
+			display: flex;
+			justify-content: center;
+		}
+
 		#input-preview, #canvas {
 			image-rendering: pixelated;
 			height: 50%;
@@ -27,12 +35,22 @@
 			right: 1em;
 		}
 
+		#file-input {
+			display: none;
+		}
+
+		#file-input-label {
+			border: solid;
+			border-radius: 1px;
+		}
+
 		hidden {
 			display: none;
 		}
 
-		#bottom-text {
-			bottom: 0px;
+		#header {
+			text-align: center;
+			font-size: 2.5vw;
 		}
 
 	</style>
@@ -396,7 +414,8 @@
 	<button id="theme-switcher">Switch to light mode</button>
 	<div>
 		<h1 id="header">Minecraft skin to Cosmic Reach skin converter</h1>
-		<input type="file" id="file-input" accept="image/png" style="font-family: 'Noto Sans';">
+		<label id="file-input-label" for="file-input">Upload File</label>
+		<input type="file" id="file-input" accept="image/png">
 		<p style="margin-top: 0; margin-bottom: 0;">or</p>
 		<input type="text" id="username-input" pattern="/^[a-zA-Z0-9_]{2,16}$/g" maxlength="16" placeholder="Enter a Minecraft Java username" size="50%"></input><input type="submit" id="username-submit"></input>
 		<br>
@@ -414,8 +433,7 @@
 			<p style="text-align: center;">Cosmic Reach skin (Right click > Save Image As...)</p>
 			<canvas id="canvas" width="128" height="64"></canvas>
 		</div>
-		<p id="bottom-text">https://api.minetools.eu/ is used for getting skins from usernames<p>
-		</div>
-		<br>
-		<br>
-	</body>
+	</div>
+	<br>
+	<br>
+</body>
