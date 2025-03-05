@@ -83,6 +83,7 @@
 		window.addEventListener("load", () => {
 
 			if (navigator.userAgentData.mobile) {
+				document.getElementById("all").style.display = "none";	
 				document.getElementById("mobile").style.display = "unset";
 			}
 
@@ -442,29 +443,31 @@
 
 <body>
 	<h1 id="mobile">Mobile devices are not supported, use a computer! (you cant play cosmic reach on mobile why would you need the skin on mobile)</h1>
-	<button id="theme-switcher">Switch to light mode</button>
-	<div>
-		<h1 id="header">Minecraft skin to Cosmic Reach skin converter</h1>
-		<label id="file-input-label" for="file-input">Upload File</label>
-		<input type="file" id="file-input" accept="image/png">
-		<p style="margin-top: 0; margin-bottom: 0;">or</p>
-		<input type="text" id="username-input" pattern="/^[a-zA-Z0-9_]{2,16}$/g" maxlength="16" placeholder="Enter a Minecraft Java username" size="50%"></input><input type="submit" id="username-submit"></input>
-		<br>
-		<label for="skin-type">Original MC skin type:</label>
-		<select name="skin-type" id="skin-type">
-			<option value="0">Wide (4px arm)</option>
-			<option value="1">Slim (3px arm)</option>
-		</select>
-		<br>
-		<div id="input-div">
-			<p class="image-label">Minecraft skin</p>
-			<img id="input-preview" src="mc-skin.png"></img>
+	<span id="all" style="display: unset;">
+		<button id="theme-switcher">Switch to light mode</button>
+		<div>
+			<h1 id="header">Minecraft skin to Cosmic Reach skin converter</h1>
+			<label id="file-input-label" for="file-input">Upload File</label>
+			<input type="file" id="file-input" accept="image/png">
+			<p style="margin-top: 0; margin-bottom: 0;">or</p>
+			<input type="text" id="username-input" pattern="/^[a-zA-Z0-9_]{2,16}$/g" maxlength="16" placeholder="Enter a Minecraft Java username" size="50%"></input><input type="submit" id="username-submit"></input>
+			<br>
+			<label for="skin-type">Original MC skin type:</label>
+			<select name="skin-type" id="skin-type">
+				<option value="0">Wide (4px arm)</option>
+				<option value="1">Slim (3px arm)</option>
+			</select>
+			<br>
+			<div id="input-div">
+				<p class="image-label">Minecraft skin</p>
+				<img id="input-preview" src="mc-skin.png"></img>
+			</div>
+			<div id="output-div">
+				<p class="image-label">Cosmic Reach skin (Right click > Save Image As...)</p>
+				<canvas id="canvas" width="128" height="64"></canvas>
+			</div>
 		</div>
-		<div id="output-div">
-			<p class="image-label">Cosmic Reach skin (Right click > Save Image As...)</p>
-			<canvas id="canvas" width="128" height="64"></canvas>
-		</div>
-	</div>
-	<br>
-	<br>
+		<br>
+		<br>
+	</span>
 </body>
