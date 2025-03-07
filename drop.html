@@ -1,0 +1,15 @@
+<body>
+  <div id="drop_zone" ondragover="event.preventDefault();">
+    <p>Drag one or more files to this Drop Zone ...</p>
+  </div>
+
+  <script type="text/javascript">
+    const dropzone = document.getElementById("drop_zone");
+
+    dropzone.ondrop = (event) => {
+      event.preventDefault();
+      console.log(event.dataTransfer.items[0].getAsFile());
+    }
+  </script>
+</body>
+</html>

@@ -1,9 +1,9 @@
 <head>
 	<title>MC2CR Skin converter</title>
 
-	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,24 +29,47 @@
 			margin: 1em;
 		}
 
-		#theme-switcher {
+		#theme-switcher-label {
 			position: fixed;
 			top: 1em;
 			right: 1em;
-			font-family: "Noto Sans", sans-serif;
+		}
+
+		#theme-switcher {
+			display: none;
 		}
 
 		#file-input {
 			display: none;
 		}
 
-		#file-input-label {
+		#username-submit {
+			display: none;
+		}
+
+		.bordered {
+			background-color: transparent;
+			color: var(--text-color);
 			border: solid;
-			border-radius: 1px;
+			border-color: var(--text-color);
+		}
+
+		.bordered:hover {
+			background-color: var(--text-color);
+			color: var(--background-color);
 		}
 
 		#username-input {
+			color: var(--text-color);
 			font-family: "Noto Sans", sans-serif;
+		}
+
+		#username-input:focus {
+			color: var(--text-color);
+		}
+
+		#username-input::placeholder {
+			color: color-mix(in srgb, var(--text-color), #7F7F7F);
 		}
 
 		.image-label {
@@ -95,12 +118,21 @@
 			const usernameInputElement = document.getElementById("username-input");
 			const usernameSubmitElement = document.getElementById("username-submit");
 
+			window.ondrop = (event) => {
+				event.preventDefault();
+				fr.readAsDataURL(event.dataTransfer.items[0].getAsFile());
+			}
+
+			window.ondragover = (event) => {
+				event.preventDefault();
+			}
+
 			const themeSwitcherElement = document.getElementById("theme-switcher");
 			const theme = document.getElementById("theme");
 			currentTheme = "dark";
 
 			defaultOutputImage = new Image();
-			defaultOutputImage.src = "cr-skin.png";
+			defaultOutputImage.src = "images/cr-skin.png";
 
 			themeSwitcherElement.onclick = () => {
 				if (currentTheme == "dark") {
@@ -443,24 +475,28 @@
 
 <body>
 	<h1 id="mobile">Mobile devices are not supported, use a computer! (you cant play cosmic reach on mobile why would you need the skin on mobile)</h1>
+
 	<span id="all" style="display: unset;">
-		<button id="theme-switcher">Switch to light mode</button>
+		<button id="theme-switcher"></button>
+		<label id="theme-switcher-label" class="bordered" for="theme-switcher">Switch to light mode</label>
 		<div>
 			<h1 id="header">Minecraft skin to Cosmic Reach skin converter</h1>
-			<label id="file-input-label" for="file-input">Upload File</label>
+			<label class="bordered" for="file-input">Click to upload file</label>
 			<input type="file" id="file-input" accept="image/png">
+			<p style="margin-top: 0; margin-bottom: 0;">or drag and drop image on anywhere on the screen</p>
 			<p style="margin-top: 0; margin-bottom: 0;">or</p>
-			<input type="text" id="username-input" pattern="/^[a-zA-Z0-9_]{2,16}$/g" maxlength="16" placeholder="Enter a Minecraft Java username" size="50%"></input><input type="submit" id="username-submit"></input>
+			<input class="bordered" type="text" id="username-input" pattern="/^[a-zA-Z0-9_]{2,16}$/g" maxlength="16" placeholder="Enter a Minecraft Java username" size="50%"></input><input type="submit" id="username-submit"></input>
+			<label class="bordered" for="username-submit">Submit username</label>
 			<br>
 			<label for="skin-type">Original MC skin type:</label>
-			<select name="skin-type" id="skin-type">
+			<select class="bordered" name="skin-type" id="skin-type">
 				<option value="0">Wide (4px arm)</option>
 				<option value="1">Slim (3px arm)</option>
 			</select>
 			<br>
 			<div id="input-div">
 				<p class="image-label">Minecraft skin</p>
-				<img id="input-preview" src="mc-skin.png"></img>
+				<img id="input-preview" src="images/mc-skin.png"></img>
 			</div>
 			<div id="output-div">
 				<p class="image-label">Cosmic Reach skin (Right click > Save Image As...)</p>
