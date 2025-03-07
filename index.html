@@ -24,6 +24,10 @@
 			height: 25vw;
 		}
 
+		#input-preview:hover, #canvas:hover {
+			background-color: transparent;
+		}
+
 		#input-div, #output-div {
 			float: left;
 			margin: 1em;
@@ -496,11 +500,11 @@
 			<br>
 			<div id="input-div">
 				<p class="image-label">Minecraft skin</p>
-				<img id="input-preview" src="images/mc-skin.png"></img>
+				<img class="bordered" id="input-preview" src="images/mc-skin.png"></img>
 			</div>
 			<div id="output-div">
 				<p class="image-label">Cosmic Reach skin (Right click > Save Image As...)</p>
-				<canvas id="canvas" width="128" height="64"></canvas>
+				<canvas class="bordered" id="canvas" width="128" height="64"></canvas>
 			</div>
 		</div>
 		<br>
