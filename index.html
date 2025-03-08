@@ -135,6 +135,7 @@
 			const skinTypeElement = document.getElementById("skin-type");
 			const usernameInputElement = document.getElementById("username-input");
 			const usernameSubmitElement = document.getElementById("username-submit");
+			const downloadButtonElement = document.getElementById("download-button");
 
 			window.ondrop = (event) => {
 				event.preventDefault();
@@ -174,6 +175,13 @@
 				context.imageSmoothingEnabled = false;
 				context.mozImageSmoothingEnabled = false;
 				context.webkitImageSmoothingEnabled = false;
+
+				downloadButtonElement.onclick = () => {
+					var link = document.createElement('a');
+					link.download = 'skin.png';
+					link.href = canvas.toDataURL()
+					link.click();
+				}
 
 				defaultOutputImage.onload = () => {
 					drawAll(skinTypeElement.value);
@@ -501,7 +509,9 @@
 				<img class="bordered" id="input-preview" src="images/mc-skin.png"></img>
 			</div>
 			<div id="output-div">
-				<p class="image-label">Cosmic Reach skin (Right click > Save Image As...)</p>
+				<p class="image-label">Cosmic Reach skin <button id="download-button"
+						style="display: none;"></button><label class="bordered" for="download-button">Download</label>
+				</p>
 				<canvas class="bordered" id="canvas" width="128" height="64"></canvas>
 			</div>
 		</div>
