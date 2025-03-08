@@ -7,7 +7,8 @@
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+		rel="stylesheet">
 
 	<link rel="stylesheet" id="theme" href="dark.css">
 	<style type="text/css">
@@ -19,16 +20,19 @@
 			justify-content: center;
 		}
 
-		#input-preview, #canvas {
+		#input-preview,
+		#canvas {
 			image-rendering: pixelated;
 			height: 25vw;
 		}
 
-		#input-preview:hover, #canvas:hover {
+		#input-preview:hover,
+		#canvas:hover {
 			background-color: transparent;
 		}
 
-		#input-div, #output-div {
+		#input-div,
+		#output-div {
 			float: left;
 			margin: 1em;
 		}
@@ -101,23 +105,26 @@
 			display: none;
 		}
 
-		@media (max-width: 1000px) { 
-			#input-div, #output-div {
-				float: none; 
-				width: 100%; 
-				margin: 1em 0; 
+		@media (max-width: 1000px) {
+
+			#input-div,
+			#output-div {
+				float: none;
+				width: 100%;
+				margin: 1em 0;
 			}
-			#input-preview, #canvas {
-				height: 50vw; 
+
+			#input-preview,
+			#canvas {
+				height: 50vw;
 			}
 		}
-
 	</style>
 	<script>
 		window.addEventListener("load", () => {
 
 			if (navigator.userAgentData?.mobile) {
-				document.getElementById("all").style.display = "none";	
+				document.getElementById("all").style.display = "none";
 				document.getElementById("mobile").style.display = "unset";
 			}
 
@@ -155,7 +162,7 @@
 					theme.href = "dark.css";
 					themeSwitcherElement.innerHTML = "Switch to light mode";
 				}
-			}			
+			}
 
 			usernameInputElement.oninput = () => {
 				usernameInputElement.value = usernameInputElement.value.replace(/[^a-zA-Z0-9_]/g, "");
@@ -165,10 +172,10 @@
 
 				const context = canvas.getContext("2d");
 				context.imageSmoothingEnabled = false;
-				context.mozImageSmoothingEnabled = false; 
+				context.mozImageSmoothingEnabled = false;
 				context.webkitImageSmoothingEnabled = false;
 
-				defaultOutputImage.onload = () => { 
+				defaultOutputImage.onload = () => {
 					drawAll(skinTypeElement.value);
 				}
 
@@ -298,99 +305,99 @@
 
 					// right arm
 					// bottom base
-					drawPart(44, 25, 4-s, 1, 10, 18, 3, 4);
+					drawPart(44, 25, 4 - s, 1, 10, 18, 3, 4);
 					// top base
-					drawPart(44, 16, 4-s, 4, 7, 18, 3, 4);
+					drawPart(44, 16, 4 - s, 4, 7, 18, 3, 4);
 					// top overlay
-					drawPart(44, 32, 4-s, 4, 71, 18, 3, 4);
+					drawPart(44, 32, 4 - s, 4, 71, 18, 3, 4);
 					// front base
-					drawPart(44, 20, 4-s, 6, 7, 22, 3, 6);
+					drawPart(44, 20, 4 - s, 6, 7, 22, 3, 6);
 					// front overlay
-					drawPart(44, 36, 4-s, 6, 71, 22, 3, 6);
+					drawPart(44, 36, 4 - s, 6, 71, 22, 3, 6);
 					// back base
-					drawPart(52-s, 20, 4-s, 6, 14, 22, 3, 6);
+					drawPart(52 - s, 20, 4 - s, 6, 14, 22, 3, 6);
 					// back overlay
-					drawPart(52-s, 36, 4-s, 6, 78, 22, 3, 6);
+					drawPart(52 - s, 36, 4 - s, 6, 78, 22, 3, 6);
 					// right base
 					drawPart(40, 20, 4, 6, 3, 22, 4, 6);
 					// right overlay
 					drawPart(40, 36, 4, 6, 67, 22, 4, 6);
 					// left base
-					drawPart(48-s, 20, 4, 6, 10, 22, 4, 6);
+					drawPart(48 - s, 20, 4, 6, 10, 22, 4, 6);
 					// left overlay
-					drawPart(48-s, 36, 4, 6, 74, 22, 4, 6);
+					drawPart(48 - s, 36, 4, 6, 74, 22, 4, 6);
 
 					// left arm
 					// bottom base
-					drawPart(36, 57, 4-s, 1, 54, 18, 3, 4);
+					drawPart(36, 57, 4 - s, 1, 54, 18, 3, 4);
 					// top base
-					drawPart(36, 48, 4-s, 4, 7+44, 18, 3, 4);
+					drawPart(36, 48, 4 - s, 4, 7 + 44, 18, 3, 4);
 					// top overlay
-					drawPart(52, 48, 4-s, 4, 115, 18, 3, 4);
+					drawPart(52, 48, 4 - s, 4, 115, 18, 3, 4);
 					// front base
-					drawPart(36, 52, 4-s, 6, 51, 22, 3, 6);
+					drawPart(36, 52, 4 - s, 6, 51, 22, 3, 6);
 					// front overlay
-					drawPart(52, 52, 4-s, 6, 115, 22, 3, 6);
+					drawPart(52, 52, 4 - s, 6, 115, 22, 3, 6);
 					// back base
-					drawPart(44-s, 52, 4-s, 6, 58, 22, 3, 6);
+					drawPart(44 - s, 52, 4 - s, 6, 58, 22, 3, 6);
 					// back overlay
-					drawPart(60-s, 52, 4-s, 6, 122, 22, 3, 6);
+					drawPart(60 - s, 52, 4 - s, 6, 122, 22, 3, 6);
 					// right base
 					drawPart(32, 52, 4, 6, 47, 22, 4, 6);
 					// right overlay
 					drawPart(48, 52, 4, 6, 111, 22, 4, 6);
 					// left base
-					drawPart(40-s, 52, 4, 6, 54, 22, 4, 6);
+					drawPart(40 - s, 52, 4, 6, 54, 22, 4, 6);
 					// left overlay
-					drawPart(56-s, 52, 4, 6, 118, 22, 4, 6);
+					drawPart(56 - s, 52, 4, 6, 118, 22, 4, 6);
 
 					// right lower arm
 					// top base
-					drawPart(44, 28, 4-s, 1, 6, 29, 4, 4);
+					drawPart(44, 28, 4 - s, 1, 6, 29, 4, 4);
 					// bottom base
-					drawPart(48-s, 16, 4-s, 4, 10, 29, 4, 4);
+					drawPart(48 - s, 16, 4 - s, 4, 10, 29, 4, 4);
 					// bottom overlay
-					drawPart(48-s, 32, 4-s, 4, 74, 29, 4, 4);
+					drawPart(48 - s, 32, 4 - s, 4, 74, 29, 4, 4);
 					// front base
-					drawPart(44, 26, 4-s, 6, 6, 33, 4, 7);
+					drawPart(44, 26, 4 - s, 6, 6, 33, 4, 7);
 					// front overlay
-					drawPart(44, 42, 4-s, 6, 70, 33, 4, 7);
+					drawPart(44, 42, 4 - s, 6, 70, 33, 4, 7);
 					// back base
-					drawPart(52-s, 26, 4-s, 6, 14, 33, 4, 7);
+					drawPart(52 - s, 26, 4 - s, 6, 14, 33, 4, 7);
 					// back overlay
-					drawPart(52-s, 42, 4-s, 6, 78, 33, 4, 7);
+					drawPart(52 - s, 42, 4 - s, 6, 78, 33, 4, 7);
 					// right base
 					drawPart(40, 26, 4, 6, 2, 33, 4, 7);
 					// right overlay
 					drawPart(40, 42, 4, 6, 66, 33, 4, 7);
 					// left base 
-					drawPart(48-s, 26, 4, 6, 10, 33, 4, 7);
+					drawPart(48 - s, 26, 4, 6, 10, 33, 4, 7);
 					// left overlay 
-					drawPart(48-s, 42, 4, 6, 74, 33, 4, 7);
+					drawPart(48 - s, 42, 4, 6, 74, 33, 4, 7);
 
 					// left lower arm
 					// top base
-					drawPart(36, 60, 4-s, 1, 50, 29, 4, 4);
+					drawPart(36, 60, 4 - s, 1, 50, 29, 4, 4);
 					// bottom base
-					drawPart(40-s, 48, 4-s, 4, 54, 29, 4, 4);
+					drawPart(40 - s, 48, 4 - s, 4, 54, 29, 4, 4);
 					// bottom overlay
-					drawPart(56-s, 48, 4-s, 4, 118, 29, 4, 4);
+					drawPart(56 - s, 48, 4 - s, 4, 118, 29, 4, 4);
 					// front base
-					drawPart(36, 58, 4-s, 6, 50, 33, 4, 7);
+					drawPart(36, 58, 4 - s, 6, 50, 33, 4, 7);
 					// front overlay
-					drawPart(52, 58, 4-s, 6, 114, 33, 4, 7);
+					drawPart(52, 58, 4 - s, 6, 114, 33, 4, 7);
 					// back base
-					drawPart(44-s, 58, 4-s, 6, 58, 33, 4, 7);
+					drawPart(44 - s, 58, 4 - s, 6, 58, 33, 4, 7);
 					// back overlay
-					drawPart(60-s, 58, 4-s, 6, 122, 33, 4, 7);
+					drawPart(60 - s, 58, 4 - s, 6, 122, 33, 4, 7);
 					// right base
 					drawPart(32, 58, 4, 6, 46, 33, 4, 7);
 					// right overlay
 					drawPart(48, 58, 4, 6, 110, 33, 4, 7);
 					// left base
-					drawPart(40-s, 58, 4, 6, 54, 33, 4, 7);
+					drawPart(40 - s, 58, 4, 6, 54, 33, 4, 7);
 					// left overlay
-					drawPart(56-s, 58, 4, 6, 118, 33, 4, 7);
+					drawPart(56 - s, 58, 4, 6, 118, 33, 4, 7);
 				}
 
 				skinTypeElement.onchange = () => {
@@ -403,56 +410,49 @@
 					usernameSubmitElement.disabled = true;
 
 					fetch(`https://api.minetools.eu/uuid/${usernameInputElement.value}`)
-					.then((r) => {
-						usernameInputElement.value = "Loading...";
-						r.json().then((j) => {
-							if (j.id == null) {
-								confirm("Player does not exist. Try a different username.");
-								usernameInputElement.disabled = false;
-								usernameSubmitElement.disabled = false;
-								usernameInputElement.placeholder = "Enter a Minecraft Java username";
-								usernameInputElement.value = "";
-								return;
-							}
-							fetch(`https://api.minetools.eu/profile/${j.id}`)
-							.then((r) => {
-								r.json().then((j) => {
-									skin = j.decoded.textures.SKIN
+						.then((r) => {
+							usernameInputElement.value = "Loading...";
+							r.json().then((j) => {
+								if (j.id == null) {
+									confirm("Player does not exist. Try a different username.");
+									usernameInputElement.disabled = false;
+									usernameSubmitElement.disabled = false;
+									usernameInputElement.placeholder = "Enter a Minecraft Java username";
+									usernameInputElement.value = "";
+									return;
+								}
+								fetch(`https://mc-skin-to-cr-skin-api.vercel.app/api/${usernameInputElement.value}`)
+									.then((r) => {
+										r.json().then((j) => {
+											// skin = j.decoded.textures.SKIN
 
-									sizeCheck = new Image();
-									sizeCheck.src = skin.url;
-									if (Object.hasOwn(skin, 'metadata')) {
-										if (skin.metadata.model == "slim") {
-											s = 1;
-											skinTypeElement.selectedIndex = 1;
-										} else {
-											s = 0;
-											skinTypeElement.selectedIndex = 0;
-										}
-									}
+											sizeCheck = new Image();
+											sizeCheck.src = j.image;
 
-									sizeCheck.onload = () => {
-										if (!(sizeCheck.width == 64 && sizeCheck.height == 64)) {
-											confirm("This player uses the 1.7 skin format, which is unsupported. Try a different player.");
-											usernameInputElement.disabled = false;
-											usernameSubmitElement.disabled = false;
-											usernameInputElement.placeholder = "Enter a Minecraft Java username";
-											usernameInputElement.value = "";
-										} else {
-											inputPreviewElement.src = sizeCheck.src;
-											inputPreviewElement.onload = () => { 	
-												drawAll(s);
-												usernameInputElement.disabled = false;
-												usernameSubmitElement.disabled = false;
-												usernameInputElement.placeholder = "Enter a Minecraft Java username";
-												usernameInputElement.value = "";
+											skinTypeElement.selectedIndex = j.pixelsToSub;
+
+											sizeCheck.onload = () => {
+												if (!(sizeCheck.width == 64 && sizeCheck.height == 64)) {
+													confirm("This player uses the 1.7 skin format, which is unsupported. Try a different player.");
+													usernameInputElement.disabled = false;
+													usernameSubmitElement.disabled = false;
+													usernameInputElement.placeholder = "Enter a Minecraft Java username";
+													usernameInputElement.value = "";
+												} else {
+													inputPreviewElement.src = sizeCheck.src;
+													inputPreviewElement.onload = () => {
+														drawAll(s);
+														usernameInputElement.disabled = false;
+														usernameSubmitElement.disabled = false;
+														usernameInputElement.placeholder = "Enter a Minecraft Java username";
+														usernameInputElement.value = "";
+													}
+												}
 											}
-										}
-									}
-								})
+										})
+									})
 							})
 						})
-					})
 				}
 
 				fr.addEventListener("load", () => {
@@ -464,7 +464,7 @@
 							confirm("Please choose a 64x64 image.");
 						} else {
 							inputPreviewElement.src = fr.result;
-							inputPreviewElement.onload = () => { 
+							inputPreviewElement.onload = () => {
 								drawAll(skinTypeElement.value);
 							}
 						}
@@ -485,7 +485,8 @@
 </head>
 
 <body>
-	<h1 id="mobile">Mobile devices are not supported, use a computer! (you cant play cosmic reach on mobile why would you need the skin on mobile)</h1>
+	<h1 id="mobile">Mobile devices are not supported, use a computer! (you cant play cosmic reach on mobile why would
+		you need the skin on mobile)</h1>
 
 	<span id="all" style="display: unset;">
 		<button id="theme-switcher"></button>
@@ -496,7 +497,9 @@
 			<input type="file" id="file-input" accept="image/png">
 			<p style="margin-top: 0; margin-bottom: 0;">or drag and drop image on anywhere on the screen</p>
 			<p style="margin-top: 0; margin-bottom: 0;">or</p>
-			<input class="bordered" type="text" id="username-input" pattern="/^[a-zA-Z0-9_]{2,16}$/g" maxlength="16" placeholder="Enter a Minecraft Java username" size="50%"></input><input type="submit" id="username-submit"></input>
+			<input class="bordered" type="text" id="username-input" pattern="/^[a-zA-Z0-9_]{2,16}$/g" maxlength="16"
+				placeholder="Enter a Minecraft Java username" size="50%"></input><input type="submit"
+				id="username-submit"></input>
 			<label class="bordered" for="username-submit">Submit username</label>
 			<br>
 			<label for="skin-type">Original MC skin type:</label>
