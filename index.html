@@ -69,6 +69,11 @@
 			color: var(--background-color);
 		}
 
+		.bordered:disabled {
+			background-color: color-mix(in srgb, var(--background-color) 75%, var(--text-color) 25%);
+			color: color-mix(in srgb, var(--text-color) 75%, var(--background-color) 25%);
+		}
+
 		#username-input {
 			color: var(--text-color);
 			font-family: "Noto Sans", sans-serif;
