@@ -409,14 +409,13 @@
 					usernameInputElement.disabled = true;
 					usernameSubmitElement.disabled = true;
 
-					fetch(`https://api.minetools.eu/uuid/${usernameInputElement.value}`)
+					fetch(`https://mc-skin-to-cr-skin-api.vercel.app/api/${usernameInputElement.value}`)
 						.then((r) => {
 							r.json().then((j) => {
-								if (j.id == null) {
+								if (j.error == "Player doesn't exist") {
 									confirm("Player does not exist. Try a different username.");
 									usernameInputElement.disabled = false;
 									usernameSubmitElement.disabled = false;
-									usernameInputElement.placeholder = "Enter a Minecraft Java username";
 									return;
 								}
 								fetch(`https://mc-skin-to-cr-skin-api.vercel.app/api/${usernameInputElement.value}`)
@@ -434,7 +433,6 @@
 													confirm("This player uses the 1.7 skin format, which is unsupported. Try a different player.");
 													usernameInputElement.disabled = false;
 													usernameSubmitElement.disabled = false;
-													usernameInputElement.placeholder = "Enter a Minecraft Java username";
 													usernameInputElement.value = "";
 												} else {
 													inputPreviewElement.src = sizeCheck.src;
@@ -442,7 +440,6 @@
 														drawAll(s);
 														usernameInputElement.disabled = false;
 														usernameSubmitElement.disabled = false;
-														usernameInputElement.placeholder = "Enter a Minecraft Java username";
 														usernameInputElement.value = "";
 													}
 												}
