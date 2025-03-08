@@ -135,6 +135,7 @@
 
 			const fr = new FileReader();
 			const canvas = document.getElementById("canvas");
+			const convertOldMcSkinCanvas = document.getElementById("convert-old-mc-skin-canvas");
 			const fileInputElement = document.getElementById("file-input");
 			const inputPreviewElement = document.getElementById("input-preview");
 			const skinTypeElement = document.getElementById("skin-type");
@@ -177,6 +178,7 @@
 			if (canvas.getContext) {
 
 				const context = canvas.getContext("2d");
+				const convertOldMcSkinContext = convertOldMcSkinCanvas.getContext("2d");
 				context.imageSmoothingEnabled = false;
 				context.mozImageSmoothingEnabled = false;
 				context.webkitImageSmoothingEnabled = false;
@@ -193,9 +195,43 @@
 				}
 
 				s = skinTypeElement.value; // number of pixels to subtract (so 4px arm - 0|1px)
+				function convertOldMcSkinDrawPart(sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight, mirror) {
+					if (mirror) {
+						convertOldMcSkinContext.save();
+						convertOldMcSkinContext.scale(-1, 1);
+						convertOldMcSkinContext.drawImage(inputPreviewElement, sx, sy, sWidth, sHeight, -dx - dWidth, dy, dWidth, dHeight);
+						convertOldMcSkinContext.restore();
+					} else {
+						convertOldMcSkinContext.drawImage(inputPreviewElement, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+					}
+				}
+
+				function convertOldMcSkin() {
+					convertOldMcSkinContext.clearRect(0, 0, 64, 64);
+
+					convertOldMcSkinDrawPart(0, 0, 64, 32, 0, 0, 64, 32);
+
+					// arm
+					convertOldMcSkinDrawPart(44, 16, 4, 4, 36, 48, 4, 4, true);
+					convertOldMcSkinDrawPart(48, 16, 4, 4, 40, 48, 4, 4, true);
+					convertOldMcSkinDrawPart(44, 20, 4, 12, 36, 52, 4, 12, true);
+					convertOldMcSkinDrawPart(52, 20, 4, 12, 44, 52, 4, 12, true);
+					convertOldMcSkinDrawPart(40, 20, 4, 12, 40, 52, 4, 12, true);
+					convertOldMcSkinDrawPart(48, 20, 4, 12, 32, 52, 4, 12, true);
+
+					// leg
+					convertOldMcSkinDrawPart(4, 16, 4, 4, 20, 48, 4, 4, true);
+					convertOldMcSkinDrawPart(8, 16, 4, 4, 24, 48, 4, 4, true);
+					convertOldMcSkinDrawPart(4, 20, 4, 12, 20, 52, 4, 12, true);
+					convertOldMcSkinDrawPart(12, 20, 4, 12, 28, 52, 4, 12, true);
+					convertOldMcSkinDrawPart(0, 20, 4, 12, 24, 52, 4, 12, true);
+					convertOldMcSkinDrawPart(8, 20, 4, 12, 16, 52, 4, 12, true);
+
+					return convertOldMcSkinCanvas.toDataURL();
+				}
 
 				function drawPart(sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) {
-					context.drawImage(inputPreviewElement, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+					context.drawImage(inputPreviewElement, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 				}
 
 				function drawAll(s) {
@@ -438,18 +474,24 @@
 								skinTypeElement.selectedIndex = j.pixelsToSub;
 
 								sizeCheck.onload = () => {
-									if (!(sizeCheck.width == 64 && sizeCheck.height == 64)) {
-										confirm("This player uses the 1.7 skin format, which is unsupported. Try a different player.");
-										usernameInputElement.disabled = false;
-										usernameSubmitElement.disabled = false;
-									} else {
+									if (sizeCheck.width == 64 && sizeCheck.height == 64) {
 										inputPreviewElement.src = sizeCheck.src;
 										inputPreviewElement.onload = () => {
 											drawAll(s);
-											usernameInputElement.disabled = false;
-											usernameSubmitElement.disabled = false;
 										}
+									} else if (sizeCheck.width == 64 && sizeCheck.height == 32) {
+										inputPreviewElement.src = sizeCheck.src;
+										inputPreviewElement.onload = () => {
+											inputPreviewElement.src = convertOldMcSkin();
+											inputPreviewElement.onload = () => {
+												drawAll(s);
+											}
+										}
+									} else {
+										confirm("Something went wrong, message me on discord");
 									}
+									usernameInputElement.disabled = false;
+									usernameSubmitElement.disabled = false;
 								}
 
 							})
@@ -461,13 +503,21 @@
 					sizeCheck.src = fr.result
 
 					sizeCheck.onload = () => {
-						if (!(sizeCheck.width == 64 && sizeCheck.height == 64)) {
-							confirm("Please choose a 64x64 image.");
-						} else {
+						if (sizeCheck.width == 64 && sizeCheck.height == 64) {
 							inputPreviewElement.src = fr.result;
 							inputPreviewElement.onload = () => {
 								drawAll(skinTypeElement.value);
 							}
+						} else if (sizeCheck.width == 64 && sizeCheck.height == 32) {
+							inputPreviewElement.src = fr.result;
+							inputPreviewElement.onload = () => {
+								inputPreviewElement.src = convertOldMcSkin();
+								inputPreviewElement.onload = () => {
+									drawAll(skinTypeElement.value);
+								}
+							}
+						} else {
+							confirm("Please choose a 64x64 image or a 64x32 (old skin format) image.");
 						}
 					}
 				})
@@ -519,6 +569,8 @@
 				</p>
 				<canvas class="bordered" id="canvas" width="128" height="64"></canvas>
 			</div>
+			<canvas id="convert-old-mc-skin-canvas" width="64" height="64" class="boredered"
+				style="display:none;"></canvas>
 		</div>
 		<br>
 		<br>
