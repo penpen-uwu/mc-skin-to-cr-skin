@@ -1,0 +1,145 @@
+@media (prefers-color-scheme: dark) {
+    body {
+        --background-color: #222222;
+        --text-color: #DDDDDD;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        --background-color: #EEEEEE;
+        --text-color: #111111;
+    }
+}
+
+body {
+    background: var(--background-color);
+    color: var(--text-color);
+    font-family: "Noto Sans", sans-serif;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#inputs-div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#inputs-div>* {
+    width: 90%;
+    height: 3vh;
+    font-size: 2.5vw;
+}
+
+#input-preview,
+#canvas {
+    image-rendering: pixelated;
+    height: 35vw;
+}
+
+#input-preview:hover,
+#canvas:hover {
+    background-color: transparent;
+}
+
+#input-div,
+#output-div {
+    margin: 1em;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#theme-switcher-label {
+    display: none;
+}
+
+#theme-switcher {
+    display: none;
+}
+
+#file-input {
+    text-align: center;
+}
+
+#file-input-label {
+    display: none;
+}
+
+#username-submit {
+    display: none;
+}
+
+#username-submit-label {
+    width: 30vw;
+    height: 3vh;
+    font-size: 3vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#username-input {
+    color: var(--text-color);
+    width: 60vw;
+    height: 3vh;
+    font-size: 3vw;
+    font-family: "Noto Sans", sans-serif;
+}
+
+#username-input:hover {
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+#username-input:focus {
+    color: var(--text-color);
+}
+
+#username-input::placeholder {
+    color: color-mix(in srgb, var(--text-color), #7F7F7F);
+}
+
+#username {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+}
+
+.bordered {
+    background-color: transparent;
+    color: var(--text-color);
+    border: solid;
+    border-color: var(--text-color);
+    padding-left: 0.5%;
+    padding-right: 0.5%;
+}
+
+.bordered:hover {
+    background-color: var(--text-color);
+    color: var(--background-color);
+}
+
+.bordered:disabled {
+    background-color: color-mix(in srgb, var(--background-color) 75%, var(--text-color) 25%);
+    color: color-mix(in srgb, var(--text-color) 75%, var(--background-color) 25%);
+}
+
+.image-label {
+    text-align: center;
+    font-size: 3vw;
+}
+
+hidden {
+    display: none;
+}
+
+#header {
+    text-align: center;
+    font-size: 7.5vw;
+}
