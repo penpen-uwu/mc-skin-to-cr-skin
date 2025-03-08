@@ -418,34 +418,27 @@
 									usernameSubmitElement.disabled = false;
 									return;
 								}
-								fetch(`https://mc-skin-to-cr-skin-api.vercel.app/api/${usernameInputElement.value}`)
-									.then((r) => {
-										r.json().then((j) => {
-											// skin = j.decoded.textures.SKIN
 
-											sizeCheck = new Image();
-											sizeCheck.src = j.image;
+								sizeCheck = new Image();
+								sizeCheck.src = j.image;
 
-											skinTypeElement.selectedIndex = j.pixelsToSub;
+								skinTypeElement.selectedIndex = j.pixelsToSub;
 
-											sizeCheck.onload = () => {
-												if (!(sizeCheck.width == 64 && sizeCheck.height == 64)) {
-													confirm("This player uses the 1.7 skin format, which is unsupported. Try a different player.");
-													usernameInputElement.disabled = false;
-													usernameSubmitElement.disabled = false;
-													usernameInputElement.value = "";
-												} else {
-													inputPreviewElement.src = sizeCheck.src;
-													inputPreviewElement.onload = () => {
-														drawAll(s);
-														usernameInputElement.disabled = false;
-														usernameSubmitElement.disabled = false;
-														usernameInputElement.value = "";
-													}
-												}
-											}
-										})
-									})
+								sizeCheck.onload = () => {
+									if (!(sizeCheck.width == 64 && sizeCheck.height == 64)) {
+										confirm("This player uses the 1.7 skin format, which is unsupported. Try a different player.");
+										usernameInputElement.disabled = false;
+										usernameSubmitElement.disabled = false;
+									} else {
+										inputPreviewElement.src = sizeCheck.src;
+										inputPreviewElement.onload = () => {
+											drawAll(s);
+											usernameInputElement.disabled = false;
+											usernameSubmitElement.disabled = false;
+										}
+									}
+								}
+
 							})
 						})
 				}
