@@ -411,14 +411,12 @@
 
 					fetch(`https://api.minetools.eu/uuid/${usernameInputElement.value}`)
 						.then((r) => {
-							usernameInputElement.value = "Loading...";
 							r.json().then((j) => {
 								if (j.id == null) {
 									confirm("Player does not exist. Try a different username.");
 									usernameInputElement.disabled = false;
 									usernameSubmitElement.disabled = false;
 									usernameInputElement.placeholder = "Enter a Minecraft Java username";
-									usernameInputElement.value = "";
 									return;
 								}
 								fetch(`https://mc-skin-to-cr-skin-api.vercel.app/api/${usernameInputElement.value}`)
