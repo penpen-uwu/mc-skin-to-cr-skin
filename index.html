@@ -45,21 +45,23 @@
 
 			const themeSwitcherElement = document.getElementById("theme-switcher");
 			const theme = document.getElementById("theme");
-			currentTheme = "dark";
 
 			defaultOutputImage = new Image();
 			defaultOutputImage.src = "images/cr-skin.png";
 
-			themeSwitcherElement.onclick = () => {
-				if (currentTheme == "dark") {
-					currentTheme = "light";
+			theme.href = `styles/${window.localStorage.getItem("theme")}.css`;
+			themeSwitcherElement.value = window.localStorage.getItem("theme");
+
+			themeSwitcherElement.onchange = () => {
+				currentTheme = themeSwitcherElement.value;
+				if (currentTheme == "light") {
 					theme.href = "styles/light.css";
-					themeSwitcherElement.innerHTML = "Switch to dark mode";
-				} else {
-					currentTheme = "dark";
+				} else if (currentTheme == "dark") {
 					theme.href = "styles/dark.css";
-					themeSwitcherElement.innerHTML = "Switch to light mode";
+				} else if (currentTheme == "auto") {
+					theme.href = "styles/auto.css";
 				}
+				window.localStorage.setItem("theme", currentTheme)
 			}
 
 			usernameInputElement.oninput = () => {
@@ -428,8 +430,12 @@
 
 <body>
 	<span id="all">
-		<button id="theme-switcher"></button>
-		<label id="theme-switcher-label" class="bordered" for="theme-switcher">Switch to light mode</label>
+		<select id="theme-switcher" class="bordered">
+			<option value="dark">Dark Mode</option>
+			<option value="light">Light Mode</option>
+			<option value="auto">Match Device</option>
+		</select>
+
 		<div>
 			<h1 id="header">Minecraft skin to Cosmic Reach skin converter</h1>
 			<div id="inputs-div">

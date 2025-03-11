@@ -1,9 +1,16 @@
 body {
     background: var(--background-color);
     color: var(--text-color);
-    font-family: "Noto Sans", sans-serif;
     display: flex;
     justify-content: center;
+
+    transition:
+        background-color 125ms,
+        color 125ms
+}
+
+* {
+    font-family: "Noto Sans", sans-serif;
 }
 
 #input-preview,
@@ -23,14 +30,10 @@ body {
     margin: 1em;
 }
 
-#theme-switcher-label {
+#theme-switcher {
     position: fixed;
     top: 1em;
     right: 1em;
-}
-
-#theme-switcher {
-    display: none;
 }
 
 #file-input {
@@ -39,6 +42,11 @@ body {
 
 #username-submit {
     display: none;
+}
+
+#username {
+    display: flex;
+    align-items: center;
 }
 
 .bordered {
@@ -62,7 +70,6 @@ body {
 
 #username-input {
     color: var(--text-color);
-    font-family: "Noto Sans", sans-serif;
 }
 
 #username-input:hover {

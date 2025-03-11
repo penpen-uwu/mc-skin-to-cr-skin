@@ -12,13 +12,20 @@
     }
 }
 
+* {
+    font-family: "Noto Sans", sans-serif;
+}
+
 body {
     background: var(--background-color);
     color: var(--text-color);
-    font-family: "Noto Sans", sans-serif;
     display: flex;
     justify-content: center;
     flex-direction: column;
+
+    transition:
+        background-color 125ms,
+        color 125ms
 }
 
 #inputs-div {
@@ -54,10 +61,6 @@ body {
     align-items: center;
 }
 
-#theme-switcher-label {
-    display: none;
-}
-
 #theme-switcher {
     display: none;
 }
@@ -88,7 +91,6 @@ body {
     width: 60vw;
     height: 3vh;
     font-size: 3vw;
-    font-family: "Noto Sans", sans-serif;
 }
 
 #username-input:hover {
