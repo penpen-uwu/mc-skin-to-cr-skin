@@ -49,6 +49,8 @@
 			defaultOutputImage = new Image();
 			defaultOutputImage.src = "images/cr-skin.png";
 
+			theme.href = `styles/auto.css`;
+			themeSwitcherElement.value = window.localStorage.setItem("theme", "auto");
 			theme.href = `styles/${window.localStorage.getItem("theme")}.css`;
 			themeSwitcherElement.value = window.localStorage.getItem("theme");
 
