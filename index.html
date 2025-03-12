@@ -33,6 +33,9 @@
 			const usernameInputElement = document.getElementById("username-input");
 			const usernameSubmitElement = document.getElementById("username-submit");
 			const downloadButtonElement = document.getElementById("download-button");
+			const conversionTypeElement = document.getElementById("conversion-type");
+			conversionType = "mc-to-cr";
+			coordsReversed = false;
 
 			window.ondrop = (event) => {
 				event.preventDefault();
@@ -47,7 +50,7 @@
 			const theme = document.getElementById("theme");
 
 			defaultOutputImage = new Image();
-			defaultOutputImage.src = "images/cr-skin.png";
+			defaultOutputImage.src = "images/cr-steve.png";
 
 			theme.href = `styles/auto.css`;
 			themeSwitcherElement.value = window.localStorage.setItem("theme", "auto");
@@ -90,6 +93,7 @@
 				}
 
 				s = skinTypeElement.value; // number of pixels to subtract (so 4px arm - 0|1px)
+
 				function convertOldMcSkinDrawPart(sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight, mirror) {
 					if (mirror) {
 						convertOldMcSkinContext.save();
@@ -126,7 +130,57 @@
 				}
 
 				function drawPart(sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) {
-					context.drawImage(inputPreviewElement, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+					if (!coordsReversed) {
+						context.drawImage(inputPreviewElement, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+					} else if (coordsReversed) {
+						context.drawImage(inputPreviewElement, dx, dy, dWidth, dHeight, sx, sy, sWidth, sHeight);
+					}
+				}
+
+				conversionTypeElement.onchange = () => {
+					conversionType = conversionTypeElement.value;
+					if (conversionType == "cr-to-mc") {
+						document.getElementById("mc-options").style.display = "none";
+						document.getElementById("input-text").innerHTML = document.getElementById("input-text").innerHTML.replace("Minecraft", "Cosmic Reach");
+						document.getElementById("output-text").innerHTML = document.getElementById("output-text").innerHTML.replace("Cosmic Reach", "Minecraft");
+
+						inputPreviewElement.src = "images/cr-default.png";
+
+						document.getElementById("skin-type-label").innerHTML = "Output Minecraft skin type:";
+
+						canvas.width = 64;
+						canvas.height = 64;
+
+						coordsReversed = true;
+
+						context.imageSmoothingEnabled = false;
+						context.mozImageSmoothingEnabled = false;
+						context.webkitImageSmoothingEnabled = false;
+
+						inputPreviewElement.onload = () => {
+							drawAll(skinTypeElement.value);
+						}
+					} else {
+						document.getElementById("mc-options").style.display = "";
+						document.getElementById("input-text").innerHTML = document.getElementById("input-text").innerHTML.replace("Cosmic Reach", "Minecraft");
+						document.getElementById("output-text").innerHTML = document.getElementById("output-text").innerHTML.replace("Minecraft", "Cosmic Reach");
+
+						inputPreviewElement.src = "images/mc-steve.png";
+
+						document.getElementById("skin-type-label").innerHTML = "Original Minecraft skin type:";
+
+						canvas.width = 128;
+						canvas.height = 64;
+
+						coordsReversed = false;
+
+						context.imageSmoothingEnabled = false;
+						context.mozImageSmoothingEnabled = false;
+						context.webkitImageSmoothingEnabled = false;
+						inputPreviewElement.onload = () => {
+							drawAll(skinTypeElement.value);
+						}
+					}
 				}
 
 				function drawAll(s) {
@@ -353,7 +407,7 @@
 					usernameInputElement.disabled = true;
 					usernameSubmitElement.disabled = true;
 
-					fetch(`https://mc-skin-to-cr-skin-api.vercel.app/api/${usernameInputElement.value}`)
+					fetch(`https://mc-steve-to-cr-skin-api.vercel.app/api/${usernameInputElement.value}`)
 						.then((r) => {
 							r.json().then((j) => {
 								if (j.error == "Player doesn't exist") {
@@ -398,22 +452,34 @@
 					sizeCheck.src = fr.result
 
 					sizeCheck.onload = () => {
-						if (sizeCheck.width == 64 && sizeCheck.height == 64) {
-							inputPreviewElement.src = fr.result;
-							inputPreviewElement.onload = () => {
-								drawAll(skinTypeElement.value);
-							}
-						} else if (sizeCheck.width == 64 && sizeCheck.height == 32) {
-							inputPreviewElement.src = fr.result;
-							inputPreviewElement.onload = () => {
-								inputPreviewElement.src = convertOldMcSkin();
+						if (conversionType == "mc-to-cr") {
+							if (sizeCheck.width == 64 && sizeCheck.height == 64) {
+								inputPreviewElement.src = fr.result;
 								inputPreviewElement.onload = () => {
 									drawAll(skinTypeElement.value);
 								}
+							} else if (sizeCheck.width == 64 && sizeCheck.height == 32) {
+								inputPreviewElement.src = fr.result;
+								inputPreviewElement.onload = () => {
+									inputPreviewElement.src = convertOldMcSkin();
+									inputPreviewElement.onload = () => {
+										drawAll(skinTypeElement.value);
+									}
+								}
+							} else {
+								confirm("Please choose a 64x64 image or a 64x32 (old skin format) image.");
 							}
-						} else {
-							confirm("Please choose a 64x64 image or a 64x32 (old skin format) image.");
+						} else if (conversionType == "cr-to-mc") {
+							if (sizeCheck.width == 128 && sizeCheck.height == 64) {
+								inputPreviewElement.src = fr.result;
+								inputPreviewElement.onload = () => {
+									drawAll(skinTypeElement.value);
+								}
+							} else {
+								confirm("Please choose a 128x64 image.");
+							}
 						}
+
 					}
 				})
 			}
@@ -439,34 +505,39 @@
 		</select>
 
 		<div>
-			<h1 id="header">Minecraft skin to Cosmic Reach skin converter</h1>
+			<h1 id="header"><select id="conversion-type" class="bordered">
+					<option value="mc-to-cr">Minecraft → Cosmic Reach</option>
+					<option value="cr-to-mc">Cosmic Reach → Minecraft</option>
+				</select> skin converter</h1>
 			<div id="inputs-div">
 				<input type="file" id="file-input" accept="image/png">
 				<label id="file-input-label" class="bordered" for="file-input">Click to upload file</label>
 				<p style="margin-top: 0; margin-bottom: 0;">or drag and drop image on anywhere on the screen</p>
-				<p style="margin-top: 0; margin-bottom: 0;">or</p>
+				<span id="mc-options">
+					<p style="margin-top: 0; margin-bottom: 0;">or</p>
 
-				<div id="username">
-					<input class="bordered" type="text" id="username-input" pattern="/^[a-zA-Z0-9_]{2,16}$/g"
-						maxlength="16" placeholder="Enter a Minecraft Java username" size="50%"></input><input
-						type="submit" id="username-submit"></input>
-					<label id="username-submit-label" class="bordered" for="username-submit">Submit username</label>
-				</div>
-
+					<div id="username">
+						<input class="bordered" type="text" id="username-input" pattern="/^[a-zA-Z0-9_]{2,16}$/g"
+							maxlength="16" placeholder="Enter a Minecraft Java username" size="50%"></input><input
+							type="submit" id="username-submit"></input>
+						<label id="username-submit-label" class="bordered" for="username-submit">Submit username</label>
+					</div>
+				</span>
 				<br>
-				<label for="skin-type">Original MC skin type:</label>
+				<label for="skin-type" id="skin-type-label">Original Minecraft skin type:</label>
 				<select class="bordered" name="skin-type" id="skin-type">
 					<option value="0">Wide (4px arm)</option>
 					<option value="1">Slim (3px arm)</option>
 				</select>
+
 			</div>
 			<br>
 			<div id="input-div">
-				<p class="image-label">Minecraft skin</p>
-				<img class="bordered" id="input-preview" src="images/mc-skin.png"></img>
+				<p class="image-label" id="input-text">Minecraft skin</p>
+				<img class="bordered" id="input-preview" src="images/mc-steve.png"></img>
 			</div>
 			<div id="output-div">
-				<p class="image-label">Cosmic Reach skin <button id="download-button"
+				<p class="image-label" id="output-text">Cosmic Reach skin <button id="download-button"
 						style="display: none;"></button><label class="bordered" for="download-button">Download</label>
 				</p>
 				<canvas class="bordered" id="canvas" width="128" height="64"></canvas>
