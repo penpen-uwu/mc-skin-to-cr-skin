@@ -16,6 +16,21 @@
     font-family: "Noto Sans", sans-serif;
 }
 
+#conversion-type {
+    font-size: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    word-spacing: inherit;
+    text-transform: inherit;
+    text-decoration: inherit;
+    text-align: inherit;
+    color: inherit;
+    background-color: inherit;
+}
+
 body {
     background: var(--background-color);
     color: var(--text-color);
@@ -143,5 +158,5 @@ hidden {
 
 #header {
     text-align: center;
-    font-size: 7.5vw;
+    font-size: 7.3vw;
 }

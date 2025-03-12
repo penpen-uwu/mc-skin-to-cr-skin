@@ -13,6 +13,19 @@ body {
     font-family: "Noto Sans", sans-serif;
 }
 
+#conversion-type {
+    font-size: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    word-spacing: inherit;
+    text-transform: inherit;
+    text-decoration: inherit;
+    text-align: inherit;
+}
+
 #input-preview,
 #canvas {
     image-rendering: pixelated;
