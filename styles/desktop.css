@@ -103,6 +103,18 @@ body {
     font-size: 1.2vw;
 }
 
+#text-and-download-button {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#download-button-label {
+    margin-left: 0.5em;
+}
+
 hidden {
     display: none;
 }
