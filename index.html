@@ -407,7 +407,7 @@
 					usernameInputElement.disabled = true;
 					usernameSubmitElement.disabled = true;
 
-					fetch(`https://mc-steve-to-cr-skin-api.vercel.app/api/${usernameInputElement.value}`)
+					fetch(`https://mc-skin-to-cr-skin-api.vercel.app/api/${usernameInputElement.value}`)
 						.then((r) => {
 							r.json().then((j) => {
 								if (j.error == "Player doesn't exist") {
